@@ -1,0 +1,55 @@
+#!/bin/bash
+# make pem file for pound with startssl certs for example
+
+if [ -n "$1" ]; then
+  CAROOTFILE=ca.crt
+  DIR="${BASH_SOURCE%/*}"
+  if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+  SSTAT=1
+  SDATE=$(date +%Y%m%d)
+  #encode
+  TPRIVATKEY=$DIR/key/$1-key-$SDATE.pem
+  if [ -z "$(cat $TPRIVATKEY)" ]; then
+    echo "Error: No init PRIVATKEY found"
+    exit
+  fi
+  $DIR/make-pound-key $TPRIVATKEY
+  PRIVATKEY=$DIR/key/$1-key-$SDATE.pem.pound
+
+  TCERTIFICATE=$DIR/crt/$1.crt
+  if [ -z "$(cat $TCERTIFICATE)" ]; then
+    echo "Error: No init TCERTIFICATE found"
+    exit
+  fi
+  $DIR/make-pound-crt $DIR/crt/$1.crt
+  CERTIFICATE=$DIR/crt/$1.crt.pound
+
+  CERTIFICATERRQUEST=$DIR/csr/$1-req-$SDATE.pem
+  CAROOT=$DIR/$CAROOTFILE
+
+  if [ -z "$(cat $PRIVATKEY)" ]; then
+    echo "Error: No PRIVATKEY found"
+    SSTAT=0
+  fi
+  if [ -z "$(cat $CERTIFICATERRQUEST)" ]; then
+    echo "Error: No CERTIFICATERRQUEST found"
+    SSTAT=0
+  fi
+  if [ -z "$(cat $CERTIFICATE)" ]; then
+    echo "Error: No CERTIFICATE found"
+    SSTAT=0
+  fi
+  if [ -z "$(cat $CAROOT)" ]; then
+    echo "Error: No CAROOT found"
+    SSTAT=0
+  fi
+  if [ $SSTAT -eq "0" ]; then
+    exit
+  fi
+
+  PEMFILE=$DIR/pem/$1.pem
+  cat $PRIVATKEY $CERTIFICATE $CERTIFICATERRQUEST $CAROOT > $PEMFILE
+  echo "Info: Successfull wirten to $PEMFILE"
+else
+  echo "Error: No Param HOSTNAME given"
+fi

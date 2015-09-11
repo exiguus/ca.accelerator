@@ -1,0 +1,1 @@
+openssl req -new -x509 -extensions v3_ca -keyout private/cakey.pem -out privat/cacert.pem -days 356 -config ./openssl.cnf

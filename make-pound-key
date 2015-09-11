@@ -1,0 +1,9 @@
+#!/bin/bash
+# make pound ready key
+
+if [ -n "$1" ]
+then
+	openssl rsa -in $1 -out $1.pound
+else
+	echo "Error: No Param KEY given"
+fi

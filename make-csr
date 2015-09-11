@@ -1,0 +1,11 @@
+#!/bin/bash
+# make certificate request
+
+if [ -n "$1" ]
+then
+	DIR="${BASH_SOURCE%/*}"
+	if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+	openssl req -new -nodes -out $DIR/csr/$1-req-`date +%Y%m%d`.pem -keyout $DIR/key/$1-key-`date +%Y%m%d`.pem -config $DIR/openssl.cnf
+else
+	echo "Error: No Param HOSTNAME given"
+fi

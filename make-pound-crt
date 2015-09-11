@@ -1,0 +1,8 @@
+#!/bin/bash
+# make Certificate ready for pound
+if [ -n "$1" ]
+then
+	openssl x509 -in $1 -out $1.pound
+else
+	echo "Error: No Param CERT given"
+fi
