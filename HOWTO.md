@@ -2,24 +2,24 @@
 
 ##TOC
 1. https
-1.1. private and public key
-1.2. cert-request
-1.3 pound pem
-1.4 pound https
+	* private and public key
+	* cert-request
+	* pound pem
+	* pound https
 2. CA file
 3. email
-3.1 postifx smtps
-3.2 dovecot imaps/pops
+	* postifx smtps
+	* dovecot imaps/pops
 4. ftp
-4.1 proftp ftps
+	* proftp ftps
 
 
 
 ## 1. https
-#### 1.1 private and public key
+### 1a. private and public key
 		Simon@nike:~ $ [130] openssl genrsa -out example.com.key 4096
 
-### 1.2 public key for cert-request
+### 1b. public key for cert-request
 		Simon@nike:~ $ [130] openssl req -new -key secure.example.org.key -out secure.example.org.csr
 		You are about to be asked to enter information that will be incorporated
 		into your certificate request.
@@ -42,7 +42,7 @@
 		An optional company name []:
 
 
-### 1.3 pound pem
+### 1c. pound pem
 Pound 1-File PEM
 		-----BEGIN RSA PRIVATE KEY-----
 
@@ -84,7 +84,7 @@ Pound 1-File PEM
 
 		-----END CERTIFICATE-----
 
-### 1.4 pound https
+### 1d. pound https
 		ListenHTTPS
 			Address 0.0.0.0
 			Port	443
@@ -99,7 +99,7 @@ generate CA-file from startssl for example to use in postfix, dovecot and proftp
 		cat startssl-ca-bundle.pem >> ca-bundle.crt
 
 ## 3. mail
-## 3.1 postfix smpts
+### 3a. postfix smpts
 		# main.cf
 		### TLS settings
 		###
@@ -136,7 +136,7 @@ generate CA-file from startssl for example to use in postfix, dovecot and proftp
 		smtp_tls_exclude_ciphers = aNULL
 		smtp_tls_cipherlist = HIGH:MEDIUM:+TLSv1:!SSLv2:+SSLv3
 
-		# 3.2 dovecot imaps/pops
+### 3b. dovecot imaps/pops
 		ssl_cipher_list = HIGH:MEDIUM:+TLSv1:!SSLv2:+SSLv3
 		ssl = required # v1.2.beta1+ uses ssl = yes
 		# Preferred permissions: root:root 0444
@@ -147,7 +147,7 @@ generate CA-file from startssl for example to use in postfix, dovecot and proftp
 		ssl_ca_file = /etc/ssl/startssl/ca-bundle.crt
 
 ## 4. ftp
-### 4.1 proftp ftps
+### 4a. proftp ftps
 		TLSRSACertificateFile                   /etc/ssl/startssl/secure.example.org.crt
 		TLSRSACertificateKeyFile                /etc/ssl/startssl/secure.example.org.key
 		#

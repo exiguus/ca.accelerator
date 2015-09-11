@@ -1,4 +1,4 @@
-#SET OF BASH SCRIPTS FOR EASY HTTPS CERT MANAGEMENT
+#Set of BASH scripts for easy HTTPS Cert Management
 creating certificate requests and (pound like) pem files
 pound is a HTTPS front-end for Web server
 
@@ -25,7 +25,7 @@ make a complete pem file for pound with startssl cert for example in /pem
 make a private ca with passphrase
 
 #OTHER FILES
-HOWTO.txt describe howto setup encrypted connections for webserver, mail and ftp with configuration example
-openssl.cnf to configure your default cert settings
-README.txt see this file
-startssl-ca.crt is the intermediate cert from startssl
+- HOWTO.txt describe howto setup encrypted connections for webserver, mail and ftp with configuration example
+- openssl.cnf to configure your default cert settings
+- README.txt see this file
+- startssl-ca.crt is the intermediate cert from startssl
